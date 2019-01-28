@@ -86,6 +86,7 @@
 <meta property="og:site_name" content="wenziyue1984">
 <meta property="og:description" content="比较简单的滑块验证码，通过破解此验证码学习破解滑块验证码的原理">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/81f0f269ly1fzm8uo1ttlj20xd0lrwiu.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/81f0f269ly1fze6v7hllgj21hc0gjjtf.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/81f0f269ly1fze78ld28aj208q04macn.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/81f0f269ly1fze9x1ofcej21hc0kp41j.jpg">
@@ -103,11 +104,11 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/81f0f269ly1fzixjlj28xj20n309daap.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/81f0f269ly1fzf5t0taavj20xz0hg0ty.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/81f0f269ly1fzm4c1zvo9j20y707kwem.jpg">
-<meta property="og:updated_time" content="2019-01-28T03:26:06.307Z">
+<meta property="og:updated_time" content="2019-01-28T05:47:22.117Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="滑块验证码">
 <meta name="twitter:description" content="比较简单的滑块验证码，通过破解此验证码学习破解滑块验证码的原理">
-<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/81f0f269ly1fze6v7hllgj21hc0gjjtf.jpg">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/81f0f269ly1fzm8uo1ttlj20xd0lrwiu.jpg">
 
 
 
@@ -320,17 +321,14 @@
         <p>比较简单的滑块验证码，通过破解此验证码学习破解滑块验证码的原理</p>
 <a id="more"></a>
 <p><a href="http://gkcf.jxedu.gov.cn/" target="_blank" rel="noopener">江西省教育考试院</a></p>
-<blockquote>
-<p>页面有一个滑块验证码，属于比较简单的滑块验证码，通过破解此验证码学习破解滑块验证码的原理</p>
-</blockquote>
-<hr>
-<h3 id="1-获取验证码图片"><a href="#1-获取验证码图片" class="headerlink" title="1.获取验证码图片"></a>1.获取验证码图片</h3><p>通过chrome开发者工具的网络面板可以找到返回验证码的请求<br><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fze6v7hllgj21hc0gjjtf.jpg" alt="image"></p>
+<p><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fzm8uo1ttlj20xd0lrwiu.jpg" alt="img"></p>
+<h3 id="获取验证码图片"><a href="#获取验证码图片" class="headerlink" title="获取验证码图片"></a>获取验证码图片</h3><p>通过chrome开发者工具的网络面板可以找到返回验证码的请求<br><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fze6v7hllgj21hc0gjjtf.jpg" alt="image"></p>
 <p>我们可以看到，这个请求只有四个参数，模拟起来很简单，返回一个json，里面有好几个东西，分析一下可以发现normal应该是返回的验证码图片（二进制），small是滑动图片（二进制），根据二进制字符生成图片可以看到图片是打乱的<br><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fze78ld28aj208q04macn.jpg" alt="image">  </p>
 <p>而返回的json里array就是图片打乱的顺序，因此我们可以利用PIL库将图片切割成二十份，再按照array里的顺序把切割的图片重新粘贴，这样我们就得到了完整的验证码图片<br><a href="https://www.cnblogs.com/lanye/p/3783785.html" target="_blank" rel="noopener">PIL.image用法，crop切割，paste粘贴</a></p>
-<h3 id="2-分析验证码校验请求"><a href="#2-分析验证码校验请求" class="headerlink" title="2.分析验证码校验请求"></a>2.分析验证码校验请求</h3><p><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fze9x1ofcej21hc0kp41j.jpg" alt="image">  </p>
+<h3 id="分析验证码校验请求"><a href="#分析验证码校验请求" class="headerlink" title="分析验证码校验请求"></a>分析验证码校验请求</h3><p><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fze9x1ofcej21hc0kp41j.jpg" alt="image">  </p>
 <p><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fze9yuc5ugj21hc0ktwg8.jpg" alt="image"></p>
 <p>通过分析校验验证码的请求我们可以发现请求的参数data是一串加密过的长字符串，而参数callback:jQuery000和获取验证码图片请求的callback参数一样，所以此时我们也知道了在发送获取验证码图片请求时不能缺少callback和_参数，这时我们的任务就是要知道加密参数data是如何生成的。</p>
-<h3 id="3-分析如何生成参数data"><a href="#3-分析如何生成参数data" class="headerlink" title="3.分析如何生成参数data"></a>3.分析如何生成参数data</h3><p><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fzeac9ej41j21hc0ktq5s.jpg" alt="img">  </p>
+<h3 id="分析如何生成参数data"><a href="#分析如何生成参数data" class="headerlink" title="分析如何生成参数data"></a>分析如何生成参数data</h3><p><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fzeac9ej41j21hc0ktq5s.jpg" alt="img">  </p>
 <p>本来打算利用XHR断点调试查看请求参数如何生成，但是发现加了断点checkcode然后刷新页面不会进入debug模式（<strong>可能只能调试异步请求，刷新页面没用？？？</strong>）</p>
 <blockquote>
 <p>大概查了下，XHR断点只能调试XHR请求，而checkcode请求并不是，所以在这里XHR调试并没用</p>
@@ -365,7 +363,7 @@
 </blockquote>
 </li>
 </ul>
-<h3 id="4-伪造参数，发送请求"><a href="#4-伪造参数，发送请求" class="headerlink" title="4.伪造参数，发送请求"></a>4.伪造参数，发送请求</h3><p><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fzf5t0taavj20xz0hg0ty.jpg" alt="img"></p>
+<h3 id="伪造参数，发送请求"><a href="#伪造参数，发送请求" class="headerlink" title="伪造参数，发送请求"></a>伪造参数，发送请求</h3><p><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fzf5t0taavj20xz0hg0ty.jpg" alt="img"></p>
 <p>我们看到参数data又经过了LZString.compressToEncodedURIComponent()函数的处理，我们找到这个函数在lz-string.min.js中，我们使用execjs模块就可以使用该函数<br>至此，参数伪造完毕，发送请求即可成功验证<br><img src="http://ww1.sinaimg.cn/large/81f0f269ly1fzm4c1zvo9j20y707kwem.jpg" alt="img"></p>
 
       
@@ -515,7 +513,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-获取验证码图片"><span class="nav-number">1.</span> <span class="nav-text">1.获取验证码图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-分析验证码校验请求"><span class="nav-number">2.</span> <span class="nav-text">2.分析验证码校验请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-分析如何生成参数data"><span class="nav-number">3.</span> <span class="nav-text">3.分析如何生成参数data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-伪造参数，发送请求"><span class="nav-number">4.</span> <span class="nav-text">4.伪造参数，发送请求</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取验证码图片"><span class="nav-number">1.</span> <span class="nav-text">获取验证码图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析验证码校验请求"><span class="nav-number">2.</span> <span class="nav-text">分析验证码校验请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析如何生成参数data"><span class="nav-number">3.</span> <span class="nav-text">分析如何生成参数data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#伪造参数，发送请求"><span class="nav-number">4.</span> <span class="nav-text">伪造参数，发送请求</span></a></li></ol></div>
             
 
           </div>
