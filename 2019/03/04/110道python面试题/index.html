@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="wenziyue1984">
 <meta property="og:description" content="python面试笔试题汇总，挖个坑，慢慢填">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-04T03:35:03.318Z">
+<meta property="og:updated_time" content="2019-03-05T03:22:35.938Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="110道python面试题">
 <meta name="twitter:description" content="python面试笔试题汇总，挖个坑，慢慢填">
@@ -326,7 +326,52 @@ print(d1) # {&apos;b&apos;: 2, &apos;c&apos;: 3}
 d1.update(d2)
 print(d1) # {&apos;b&apos;: 2, &apos;c&apos;: 3, &apos;d&apos;: 4, &apos;e&apos;: 5}
 </code></pre><h3 id="005-谈下python的GIL"><a href="#005-谈下python的GIL" class="headerlink" title="005.谈下python的GIL"></a>005.谈下python的GIL</h3><p>gil是python的全局解释器锁，他并不是python的特性，而是cpython解释器的特性（我们平时使用的都是cpython）。<br>gil是一个全局锁，所有的python都给它上了锁，执行前获取gil锁，执行完毕释放锁让其他线程执行。<br>因为gil的存在所以同一时刻在一个cpu上只能运行一个线程，无法将索格线程映射到多个cpu上，所以python里的多线程实际上是伪多线程，如果要利用多核cpu的话就要用多进程（但是系统资源开销大）。<br>但在遇到io操作时也会释放gil锁，所以在io密集型程序用多线程也会提高效率，而遇到计算密集型的程序因为切换线程的开销不但不会提高效率反而可能有副作用。  </p>
+<h3 id="006-python实现列表去重"><a href="#006-python实现列表去重" class="headerlink" title="006.python实现列表去重"></a>006.python实现列表去重</h3><pre><code>l = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
 
+# 方法1
+l_new = list(set(l))
+print(l_new)
+
+# 方法2
+l_new = []
+for i in l:
+    if i not in l_new:
+        l_new.append(i)
+print(l_new)
+
+# 方法1更简洁，方法2不会打乱列表原来顺序
+</code></pre><h3 id="007-fun-args-kwargs-中的-args-kwargs什么意思？"><a href="#007-fun-args-kwargs-中的-args-kwargs什么意思？" class="headerlink" title="007.fun(*args,**kwargs)中的*args,**kwargs什么意思？"></a>007.fun(*args,**kwargs)中的*args,**kwargs什么意思？</h3><pre><code>分开四部分讲：*，*args，**，**kwargs
+def fun(a,b,c):
+    print(a,b,c)
+
+我们调用fun的时候不能fun([1,2,3])，这样会报错，但如果fun(*[1,2,3])就可以，*就是将后面的序列类型拆开一个个的传入函数。
+
+有时候我们并不知道有多少个参数传入函数，这时候我们就可以用*args，fun(*args)，args会把传入的参数打包成一个tuple，*args就是把这个tuple逐个传入函数。它只适用于非键值对类型，dict就不行。
+
+**和*类似，也是拆包，不过它拆的是dict，调用fun(a,b,c)时我们可以直接fun(1，2，3)，也可以写成fun(a=1,b=2,c=3)，但是我们不能传入fun({a:1,b:2,c:3})，但是有了**就可以，fun(**{a:1,b:2,c:3})，它会将后面的dict拆成键值对的形式传入函数。
+
+我们不知道要把什么参数传进函数的时候就可以用**kwargs，fun(**kwargs)，fun(a=1,b=2,c=3)，kwargs会把参数列表打包成一个dict，我们在函数内kwargs[a]就可以获取a的值。
+
+总结一下就是，当我们不知道函数内要传入多少个值/传什么值的时候就可以使用*args,**kwargs这种万能参数
+</code></pre><h3 id="008-python2和python3的range（100）的区别"><a href="#008-python2和python3的range（100）的区别" class="headerlink" title="008.python2和python3的range（100）的区别"></a>008.python2和python3的range（100）的区别</h3><pre><code>py2中range返回一个列表
+py3中的range就像py2中的xrange，它返回一个迭代器
+</code></pre><h3 id="009-一句话解释什么样的语言能够用装饰器"><a href="#009-一句话解释什么样的语言能够用装饰器" class="headerlink" title="009.一句话解释什么样的语言能够用装饰器?"></a>009.一句话解释什么样的语言能够用装饰器?</h3><pre><code>函数能够当作参数传递的语言，或者说完全面向对象的语言
+</code></pre><h3 id="010-python内建数据类型有哪些"><a href="#010-python内建数据类型有哪些" class="headerlink" title="010.python内建数据类型有哪些"></a>010.python内建数据类型有哪些</h3><pre><code>常用：
+None（全局只有一个）
+int
+float
+bool
+str
+list
+tuple
+set
+dict
+
+不常用：
+array数组，from array import array
+frozenset不可变数组
+range,在py3中range也是一种序列类型
+</code></pre>
       
     </div>
     
@@ -474,7 +519,7 @@ print(d1) # {&apos;b&apos;: 2, &apos;c&apos;: 3, &apos;d&apos;: 4, &apos;e&apos;
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#001-一行代码实现1-100求和"><span class="nav-number">1.</span> <span class="nav-text">001.一行代码实现1-100求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#002-如何在一个函数内部修改全局变量"><span class="nav-number">2.</span> <span class="nav-text">002.如何在一个函数内部修改全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#003-列出5个python标准库"><span class="nav-number">3.</span> <span class="nav-text">003.列出5个python标准库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#004-字典如何删除键和合并两个字典"><span class="nav-number">4.</span> <span class="nav-text">004.字典如何删除键和合并两个字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#005-谈下python的GIL"><span class="nav-number">5.</span> <span class="nav-text">005.谈下python的GIL</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#001-一行代码实现1-100求和"><span class="nav-number">1.</span> <span class="nav-text">001.一行代码实现1-100求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#002-如何在一个函数内部修改全局变量"><span class="nav-number">2.</span> <span class="nav-text">002.如何在一个函数内部修改全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#003-列出5个python标准库"><span class="nav-number">3.</span> <span class="nav-text">003.列出5个python标准库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#004-字典如何删除键和合并两个字典"><span class="nav-number">4.</span> <span class="nav-text">004.字典如何删除键和合并两个字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#005-谈下python的GIL"><span class="nav-number">5.</span> <span class="nav-text">005.谈下python的GIL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#006-python实现列表去重"><span class="nav-number">6.</span> <span class="nav-text">006.python实现列表去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#007-fun-args-kwargs-中的-args-kwargs什么意思？"><span class="nav-number">7.</span> <span class="nav-text">007.fun(*args,**kwargs)中的*args,**kwargs什么意思？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#008-python2和python3的range（100）的区别"><span class="nav-number">8.</span> <span class="nav-text">008.python2和python3的range（100）的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#009-一句话解释什么样的语言能够用装饰器"><span class="nav-number">9.</span> <span class="nav-text">009.一句话解释什么样的语言能够用装饰器?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#010-python内建数据类型有哪些"><span class="nav-number">10.</span> <span class="nav-text">010.python内建数据类型有哪些</span></a></li></ol></div>
             
 
           </div>
