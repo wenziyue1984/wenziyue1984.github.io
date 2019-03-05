@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="wenziyue1984">
 <meta property="og:description" content="python面试笔试题汇总，挖个坑，慢慢填">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-05T03:22:35.938Z">
+<meta property="og:updated_time" content="2019-03-05T03:29:25.659Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="110道python面试题">
 <meta name="twitter:description" content="python面试笔试题汇总，挖个坑，慢慢填">
@@ -344,15 +344,15 @@ print(l_new)
 def fun(a,b,c):
     print(a,b,c)
 
-我们调用fun的时候不能fun([1,2,3])，这样会报错，但如果fun(*[1,2,3])就可以，*就是将后面的序列类型拆开一个个的传入函数。
+1.我们调用fun的时候不能fun([1,2,3])，这样会报错，但如果fun(*[1,2,3])就可以，*就是将后面的序列类型拆开一个个的传入函数。
 
-有时候我们并不知道有多少个参数传入函数，这时候我们就可以用*args，fun(*args)，args会把传入的参数打包成一个tuple，*args就是把这个tuple逐个传入函数。它只适用于非键值对类型，dict就不行。
+2.有时候我们并不知道有多少个参数传入函数，这时候我们就可以用*args，fun(*args)，args会把传入的参数打包成一个tuple，*args就是把这个tuple逐个传入函数。它只适用于非键值对类型，dict就不行。
 
-**和*类似，也是拆包，不过它拆的是dict，调用fun(a,b,c)时我们可以直接fun(1，2，3)，也可以写成fun(a=1,b=2,c=3)，但是我们不能传入fun({a:1,b:2,c:3})，但是有了**就可以，fun(**{a:1,b:2,c:3})，它会将后面的dict拆成键值对的形式传入函数。
+3.**和*类似，也是拆包，不过它拆的是dict，调用fun(a,b,c)时我们可以直接fun(1，2，3)，也可以写成fun(a=1,b=2,c=3)，但是我们不能传入fun({a:1,b:2,c:3})，但是有了**就可以，fun(**{a:1,b:2,c:3})，它会将后面的dict拆成键值对的形式传入函数。
 
-我们不知道要把什么参数传进函数的时候就可以用**kwargs，fun(**kwargs)，fun(a=1,b=2,c=3)，kwargs会把参数列表打包成一个dict，我们在函数内kwargs[a]就可以获取a的值。
+4.我们不知道要把什么参数传进函数的时候就可以用**kwargs，fun(**kwargs)，fun(a=1,b=2,c=3)，kwargs会把参数列表打包成一个dict，我们在函数内kwargs[a]就可以获取a的值。
 
-总结一下就是，当我们不知道函数内要传入多少个值/传什么值的时候就可以使用*args,**kwargs这种万能参数
+5.总结一下就是，当我们不知道函数内要传入多少个值/传什么值的时候就可以使用*args,**kwargs这种万能参数
 </code></pre><h3 id="008-python2和python3的range（100）的区别"><a href="#008-python2和python3的range（100）的区别" class="headerlink" title="008.python2和python3的range（100）的区别"></a>008.python2和python3的range（100）的区别</h3><pre><code>py2中range返回一个列表
 py3中的range就像py2中的xrange，它返回一个迭代器
 </code></pre><h3 id="009-一句话解释什么样的语言能够用装饰器"><a href="#009-一句话解释什么样的语言能够用装饰器" class="headerlink" title="009.一句话解释什么样的语言能够用装饰器?"></a>009.一句话解释什么样的语言能够用装饰器?</h3><pre><code>函数能够当作参数传递的语言，或者说完全面向对象的语言
