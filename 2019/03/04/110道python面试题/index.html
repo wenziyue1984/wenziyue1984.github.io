@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="wenziyue1984">
 <meta property="og:description" content="python面试笔试题汇总，挖个坑，慢慢填">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-05T03:29:25.659Z">
+<meta property="og:updated_time" content="2019-03-06T03:06:02.698Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="110道python面试题">
 <meta name="twitter:description" content="python面试笔试题汇总，挖个坑，慢慢填">
@@ -325,7 +325,7 @@ del(d1[&apos;a&apos;])  # 也可以写成 del d1[&apos;a&apos;]，一样的
 print(d1) # {&apos;b&apos;: 2, &apos;c&apos;: 3}
 d1.update(d2)
 print(d1) # {&apos;b&apos;: 2, &apos;c&apos;: 3, &apos;d&apos;: 4, &apos;e&apos;: 5}
-</code></pre><h3 id="005-谈下python的GIL"><a href="#005-谈下python的GIL" class="headerlink" title="005.谈下python的GIL"></a>005.谈下python的GIL</h3><p>gil是python的全局解释器锁，他并不是python的特性，而是cpython解释器的特性（我们平时使用的都是cpython）。<br>gil是一个全局锁，所有的python都给它上了锁，执行前获取gil锁，执行完毕释放锁让其他线程执行。<br>因为gil的存在所以同一时刻在一个cpu上只能运行一个线程，无法将索格线程映射到多个cpu上，所以python里的多线程实际上是伪多线程，如果要利用多核cpu的话就要用多进程（但是系统资源开销大）。<br>但在遇到io操作时也会释放gil锁，所以在io密集型程序用多线程也会提高效率，而遇到计算密集型的程序因为切换线程的开销不但不会提高效率反而可能有副作用。  </p>
+</code></pre><h3 id="005-谈下python的GIL"><a href="#005-谈下python的GIL" class="headerlink" title="005.谈下python的GIL"></a>005.谈下python的GIL</h3><p>gil是python的全局解释器锁，他并不是python的特性，而是cpython解释器的特性（我们平时使用的都是cpython）。<br>gil是一个全局锁，所有的python都给它上了锁，执行前获取gil锁，执行完毕释放锁让其他线程执行。<br>因为gil的存在所以同一时刻在一个cpu上只能运行一个线程，无法将多格线程映射到多个cpu上，所以python里的多线程实际上是伪多线程，如果要利用多核cpu的话就要用多进程（但是系统资源开销大）。<br>但在遇到io操作时也会释放gil锁，所以在io密集型程序用多线程也会提高效率，而遇到计算密集型的程序因为切换线程的开销不但不会提高效率反而可能有副作用。  </p>
 <h3 id="006-python实现列表去重"><a href="#006-python实现列表去重" class="headerlink" title="006.python实现列表去重"></a>006.python实现列表去重</h3><pre><code>l = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
 
 # 方法1
@@ -371,6 +371,33 @@ dict
 array数组，from array import array
 frozenset不可变数组
 range,在py3中range也是一种序列类型
+</code></pre><h3 id="011-简述面向对象中-new-和-init-区别"><a href="#011-简述面向对象中-new-和-init-区别" class="headerlink" title="011.简述面向对象中__new__和__init__区别"></a>011.简述面向对象中__new__和__init__区别</h3><pre><code>class Person(object):
+    def __new__(cls, name, age):
+        return super(Person, cls).__new__(cls, name, age)
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+在new一个对象的时候，先执行__new__，生成这个实例，然后再执行__init__，初始化这个实例，比如给它添加属性，
+__init__里面传入的self实际上就是__new__生成的实例。
+所以__new__必须要有返回值，通常调用父类的__new__方法，return super(类名,cls)__new__
+而__init__不需要返回值
+</code></pre><h3 id="012-简述with方法打开处理文件帮我我们做了什么？"><a href="#012-简述with方法打开处理文件帮我我们做了什么？" class="headerlink" title="012.简述with方法打开处理文件帮我我们做了什么？"></a>012.简述with方法打开处理文件帮我我们做了什么？</h3><pre><code>使用with可以简化代码，它实际上就是调用了两个魔法函数，__enter__和__exit__，
+一般在__enter__里获取资源，在__exit__里释放资源，比如说io操作结束的时候我们一般要写close()，
+有了with我们就可以把close()定义在__exit__里面，就不怕忘写close了
+我们自己写的类如果实现了这两个魔法函数也可以使用with
+</code></pre><h3 id="013-列表-1-2-3-4-5-请使用map-函数输出-1-4-9-16-25-，并使用列表推导式提取出大于10的数，最终输出-16-25"><a href="#013-列表-1-2-3-4-5-请使用map-函数输出-1-4-9-16-25-，并使用列表推导式提取出大于10的数，最终输出-16-25" class="headerlink" title="013.列表[1,2,3,4,5],请使用map()函数输出[1,4,9,16,25]，并使用列表推导式提取出大于10的数，最终输出[16,25]"></a>013.列表[1,2,3,4,5],请使用map()函数输出[1,4,9,16,25]，并使用列表推导式提取出大于10的数，最终输出[16,25]</h3><pre><code>l = [1, 2, 3, 4, 5]
+l_new = list(map(lambda x: x**2, l)) # map函数返回迭代器，打印需要转成list
+print(l_new)
+print([x for x in l_new if x &gt; 10])
+</code></pre><h3 id="014-python中生成随机整数、随机小数、0—1之间小数方法"><a href="#014-python中生成随机整数、随机小数、0—1之间小数方法" class="headerlink" title="014.python中生成随机整数、随机小数、0—1之间小数方法"></a>014.python中生成随机整数、随机小数、0—1之间小数方法</h3><pre><code>import random
+import numpy
+a = random.randint(0, 10)
+b = numpy.random.randn(3)    #生成三个随机小数
+c = random.random()
+print(&apos;{}, {}, {}&apos;.format(a, b, c))
+# 10, [0.82634176], 0.9931959179226799
+</code></pre><h3 id="015-避免转义给字符串加哪个字母表示原始字符串？"><a href="#015-避免转义给字符串加哪个字母表示原始字符串？" class="headerlink" title="015.避免转义给字符串加哪个字母表示原始字符串？"></a>015.避免转义给字符串加哪个字母表示原始字符串？</h3><pre><code>r，表示不转义原始字符
 </code></pre>
       
     </div>
@@ -519,7 +546,7 @@ range,在py3中range也是一种序列类型
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#001-一行代码实现1-100求和"><span class="nav-number">1.</span> <span class="nav-text">001.一行代码实现1-100求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#002-如何在一个函数内部修改全局变量"><span class="nav-number">2.</span> <span class="nav-text">002.如何在一个函数内部修改全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#003-列出5个python标准库"><span class="nav-number">3.</span> <span class="nav-text">003.列出5个python标准库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#004-字典如何删除键和合并两个字典"><span class="nav-number">4.</span> <span class="nav-text">004.字典如何删除键和合并两个字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#005-谈下python的GIL"><span class="nav-number">5.</span> <span class="nav-text">005.谈下python的GIL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#006-python实现列表去重"><span class="nav-number">6.</span> <span class="nav-text">006.python实现列表去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#007-fun-args-kwargs-中的-args-kwargs什么意思？"><span class="nav-number">7.</span> <span class="nav-text">007.fun(*args,**kwargs)中的*args,**kwargs什么意思？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#008-python2和python3的range（100）的区别"><span class="nav-number">8.</span> <span class="nav-text">008.python2和python3的range（100）的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#009-一句话解释什么样的语言能够用装饰器"><span class="nav-number">9.</span> <span class="nav-text">009.一句话解释什么样的语言能够用装饰器?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#010-python内建数据类型有哪些"><span class="nav-number">10.</span> <span class="nav-text">010.python内建数据类型有哪些</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#001-一行代码实现1-100求和"><span class="nav-number">1.</span> <span class="nav-text">001.一行代码实现1-100求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#002-如何在一个函数内部修改全局变量"><span class="nav-number">2.</span> <span class="nav-text">002.如何在一个函数内部修改全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#003-列出5个python标准库"><span class="nav-number">3.</span> <span class="nav-text">003.列出5个python标准库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#004-字典如何删除键和合并两个字典"><span class="nav-number">4.</span> <span class="nav-text">004.字典如何删除键和合并两个字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#005-谈下python的GIL"><span class="nav-number">5.</span> <span class="nav-text">005.谈下python的GIL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#006-python实现列表去重"><span class="nav-number">6.</span> <span class="nav-text">006.python实现列表去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#007-fun-args-kwargs-中的-args-kwargs什么意思？"><span class="nav-number">7.</span> <span class="nav-text">007.fun(*args,**kwargs)中的*args,**kwargs什么意思？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#008-python2和python3的range（100）的区别"><span class="nav-number">8.</span> <span class="nav-text">008.python2和python3的range（100）的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#009-一句话解释什么样的语言能够用装饰器"><span class="nav-number">9.</span> <span class="nav-text">009.一句话解释什么样的语言能够用装饰器?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#010-python内建数据类型有哪些"><span class="nav-number">10.</span> <span class="nav-text">010.python内建数据类型有哪些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#011-简述面向对象中-new-和-init-区别"><span class="nav-number">11.</span> <span class="nav-text">011.简述面向对象中__new__和__init__区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#012-简述with方法打开处理文件帮我我们做了什么？"><span class="nav-number">12.</span> <span class="nav-text">012.简述with方法打开处理文件帮我我们做了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#013-列表-1-2-3-4-5-请使用map-函数输出-1-4-9-16-25-，并使用列表推导式提取出大于10的数，最终输出-16-25"><span class="nav-number">13.</span> <span class="nav-text">013.列表[1,2,3,4,5],请使用map()函数输出[1,4,9,16,25]，并使用列表推导式提取出大于10的数，最终输出[16,25]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#014-python中生成随机整数、随机小数、0—1之间小数方法"><span class="nav-number">14.</span> <span class="nav-text">014.python中生成随机整数、随机小数、0—1之间小数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#015-避免转义给字符串加哪个字母表示原始字符串？"><span class="nav-number">15.</span> <span class="nav-text">015.避免转义给字符串加哪个字母表示原始字符串？</span></a></li></ol></div>
             
 
           </div>
