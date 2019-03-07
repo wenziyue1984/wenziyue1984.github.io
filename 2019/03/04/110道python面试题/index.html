@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="wenziyue1984">
 <meta property="og:description" content="python面试笔试题汇总，挖个坑，慢慢填">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-06T03:10:32.602Z">
+<meta property="og:updated_time" content="2019-03-07T06:36:59.933Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="110道python面试题">
 <meta name="twitter:description" content="python面试笔试题汇总，挖个坑，慢慢填">
@@ -398,6 +398,87 @@ c = random.random()
 print(&apos;{}, {}, {}&apos;.format(a, b, c))
 # 0, [ 1.04485849 -0.97260038  1.11897151], 0.037713159667837504
 </code></pre><h3 id="015-避免转义给字符串加哪个字母表示原始字符串？"><a href="#015-避免转义给字符串加哪个字母表示原始字符串？" class="headerlink" title="015.避免转义给字符串加哪个字母表示原始字符串？"></a>015.避免转义给字符串加哪个字母表示原始字符串？</h3><pre><code>r，表示不转义原始字符串
+</code></pre><h3 id="016-lt-div-class-”nam”-中国-lt-div-，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的"><a href="#016-lt-div-class-”nam”-中国-lt-div-，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的" class="headerlink" title="016.&lt;div class=”nam”>中国&lt;/div>，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的"></a>016.&lt;div class=”nam”>中国&lt;/div>，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的</h3><pre><code>import re
+s = &apos;&lt;div class=&quot;nam&quot;&gt;中国&lt;/div&gt;&apos;
+result = re.findall(r&apos;&lt;div class=&quot;.*&quot;&gt;(.*?)&lt;/div&gt;&apos;, s)
+print(result)
+# .*提取文本，(.*?)提取文本
+
+re.findall()    匹配所有的，返回一个list
+re.search()        只返回匹配的第一个，返回一个匹配对象，匹配不到返回None
+re.match()        和search差不多，只不过是从起始位置匹配，不是起始位置也返回None
+re.compile()    生成正则对象，供search和match使用
+
+正则判断一个字符串是否为浮点数，如：
+s = ‘5.0129’
+pattern = re.compile(r&apos;^[-+]?[0-9]+\.[0-9]+$&apos;)
+# pattern = re.compile(r&apos;^-?\d+\.\d+$&apos;)
+result = pattern.match(s)
+if result:
+    print(&apos;这是浮点数&apos;)
+else:
+    print(&apos;这不是浮点数&apos;)
+
+关于这个正则表达式，解释一下：
+^[-+]?[0-9]+\.[0-9]+$     # \d同[0-9]
+^表示以这个字符开头，也就是以[-+]开头，[-+]表示字符-或者+之一        #一般正数不加+，所以可以省略[-+]中的+ 
+?表示0个或1个，也就是说符号是可选的。
+同理[0-9]表示0到9的一个数字，+表示1个或多个，也就是整数部分。
+\.表示的是小数点，\是转义字符因为.是特殊符号（匹配任意单个除\r\n之外的字符），所以需要转义。
+小数部分同理，$表示字符串以此结尾。
+</code></pre><h3 id="017-python中断言方法举例"><a href="#017-python中断言方法举例" class="headerlink" title="017.python中断言方法举例"></a>017.python中断言方法举例</h3><pre><code># assert 断言，后跟一个判别式，如果为false就抛出一个断言异常AssertionError
+try:
+    assert 1 &lt; 0
+except AssertionError:
+    print(&apos;assert error&apos;)
+</code></pre><h3 id="018-数据表student有id-name-score-city字段，其中name中的名字可有重复，需要消除重复行-请写sql语句"><a href="#018-数据表student有id-name-score-city字段，其中name中的名字可有重复，需要消除重复行-请写sql语句" class="headerlink" title="018.数据表student有id,name,score,city字段，其中name中的名字可有重复，需要消除重复行,请写sql语句"></a>018.数据表student有id,name,score,city字段，其中name中的名字可有重复，需要消除重复行,请写sql语句</h3><pre><code>select distinct name from student
+</code></pre><h3 id="019-10个Linux常用命令"><a href="#019-10个Linux常用命令" class="headerlink" title="019.10个Linux常用命令"></a>019.10个Linux常用命令</h3><pre><code>ls 查看目录中的文件 
+cd 进入目录
+pwd 显示工作路径
+tree 显示目录树形图 
+rm 删除
+mkdir 新建文件夹
+mv 移动/重命名 目录
+cp 复制
+cat 查看文件
+apt-get/rpm/yum 安装包
+rar/tar/zip 压缩解压操作
+ifconfig 显示网络配置
+</code></pre><h3 id="020-python2和python3区别？列举5个"><a href="#020-python2和python3区别？列举5个" class="headerlink" title="020.python2和python3区别？列举5个"></a>020.python2和python3区别？列举5个</h3><pre><code>1.print
+2.range
+3.input/raw_input
+4.编码，py2使用ascii编码，py3使用utf-8
+    py2:
+        &gt;&gt;&gt; str = &quot;我爱北京天安门&quot;
+        &gt;&gt;&gt; str
+        &apos;\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8&apos;
+        &gt;&gt;&gt; str = u&quot;我爱北京天安门&quot;
+        &gt;&gt;&gt; str
+        u&apos;\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8&apos;
+    py3:
+        &gt;&gt;&gt; str = &quot;我爱北京天安门&quot;
+        &gt;&gt;&gt; str
+        &apos;我爱北京天安门&apos;
+5.除法运算，py2中整数除以整数和其他语言一样，会舍弃小数部分只返回整数，而浮点数相除会返回浮点数。但是在py3中整数相除也返回浮点数：
+    py2:
+        &gt;&gt;&gt; 1 / 2
+        0
+        &gt;&gt;&gt; 1.0 / 2.0
+        0.5
+    py3:
+        &gt;&gt;&gt; 2/1
+        2.0
+6.异常
+    py2:    except Exception, e:
+    py3:    except Exception as e:
+7.一些模块改名
+    如：Queue ——&gt; queue
+8.dict
+    取消了 dict.iteritems()，用items(),keys(),values()
+    取消了 dict.has_key()，用in代替
+9.map/filter
+    py2里返回list
+    py3里返回map对象/filter对象，都是迭代器
 </code></pre>
       
     </div>
@@ -546,7 +627,7 @@ print(&apos;{}, {}, {}&apos;.format(a, b, c))
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#001-一行代码实现1-100求和"><span class="nav-number">1.</span> <span class="nav-text">001.一行代码实现1-100求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#002-如何在一个函数内部修改全局变量"><span class="nav-number">2.</span> <span class="nav-text">002.如何在一个函数内部修改全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#003-列出5个python标准库"><span class="nav-number">3.</span> <span class="nav-text">003.列出5个python标准库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#004-字典如何删除键和合并两个字典"><span class="nav-number">4.</span> <span class="nav-text">004.字典如何删除键和合并两个字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#005-谈下python的GIL"><span class="nav-number">5.</span> <span class="nav-text">005.谈下python的GIL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#006-python实现列表去重"><span class="nav-number">6.</span> <span class="nav-text">006.python实现列表去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#007-fun-args-kwargs-中的-args-kwargs什么意思？"><span class="nav-number">7.</span> <span class="nav-text">007.fun(*args,**kwargs)中的*args,**kwargs什么意思？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#008-python2和python3的range（100）的区别"><span class="nav-number">8.</span> <span class="nav-text">008.python2和python3的range（100）的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#009-一句话解释什么样的语言能够用装饰器"><span class="nav-number">9.</span> <span class="nav-text">009.一句话解释什么样的语言能够用装饰器?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#010-python内建数据类型有哪些"><span class="nav-number">10.</span> <span class="nav-text">010.python内建数据类型有哪些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#011-简述面向对象中-new-和-init-区别"><span class="nav-number">11.</span> <span class="nav-text">011.简述面向对象中__new__和__init__区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#012-简述with方法打开处理文件帮我我们做了什么？"><span class="nav-number">12.</span> <span class="nav-text">012.简述with方法打开处理文件帮我我们做了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#013-列表-1-2-3-4-5-请使用map-函数输出-1-4-9-16-25-，并使用列表推导式提取出大于10的数，最终输出-16-25"><span class="nav-number">13.</span> <span class="nav-text">013.列表[1,2,3,4,5],请使用map()函数输出[1,4,9,16,25]，并使用列表推导式提取出大于10的数，最终输出[16,25]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#014-python中生成随机整数、随机小数、0—1之间小数方法"><span class="nav-number">14.</span> <span class="nav-text">014.python中生成随机整数、随机小数、0—1之间小数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#015-避免转义给字符串加哪个字母表示原始字符串？"><span class="nav-number">15.</span> <span class="nav-text">015.避免转义给字符串加哪个字母表示原始字符串？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#001-一行代码实现1-100求和"><span class="nav-number">1.</span> <span class="nav-text">001.一行代码实现1-100求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#002-如何在一个函数内部修改全局变量"><span class="nav-number">2.</span> <span class="nav-text">002.如何在一个函数内部修改全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#003-列出5个python标准库"><span class="nav-number">3.</span> <span class="nav-text">003.列出5个python标准库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#004-字典如何删除键和合并两个字典"><span class="nav-number">4.</span> <span class="nav-text">004.字典如何删除键和合并两个字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#005-谈下python的GIL"><span class="nav-number">5.</span> <span class="nav-text">005.谈下python的GIL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#006-python实现列表去重"><span class="nav-number">6.</span> <span class="nav-text">006.python实现列表去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#007-fun-args-kwargs-中的-args-kwargs什么意思？"><span class="nav-number">7.</span> <span class="nav-text">007.fun(*args,**kwargs)中的*args,**kwargs什么意思？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#008-python2和python3的range（100）的区别"><span class="nav-number">8.</span> <span class="nav-text">008.python2和python3的range（100）的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#009-一句话解释什么样的语言能够用装饰器"><span class="nav-number">9.</span> <span class="nav-text">009.一句话解释什么样的语言能够用装饰器?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#010-python内建数据类型有哪些"><span class="nav-number">10.</span> <span class="nav-text">010.python内建数据类型有哪些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#011-简述面向对象中-new-和-init-区别"><span class="nav-number">11.</span> <span class="nav-text">011.简述面向对象中__new__和__init__区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#012-简述with方法打开处理文件帮我我们做了什么？"><span class="nav-number">12.</span> <span class="nav-text">012.简述with方法打开处理文件帮我我们做了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#013-列表-1-2-3-4-5-请使用map-函数输出-1-4-9-16-25-，并使用列表推导式提取出大于10的数，最终输出-16-25"><span class="nav-number">13.</span> <span class="nav-text">013.列表[1,2,3,4,5],请使用map()函数输出[1,4,9,16,25]，并使用列表推导式提取出大于10的数，最终输出[16,25]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#014-python中生成随机整数、随机小数、0—1之间小数方法"><span class="nav-number">14.</span> <span class="nav-text">014.python中生成随机整数、随机小数、0—1之间小数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#015-避免转义给字符串加哪个字母表示原始字符串？"><span class="nav-number">15.</span> <span class="nav-text">015.避免转义给字符串加哪个字母表示原始字符串？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#016-lt-div-class-”nam”-中国-lt-div-，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的"><span class="nav-number">16.</span> <span class="nav-text">016.&lt;div class=”nam”&gt;中国&lt;/div&gt;，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#017-python中断言方法举例"><span class="nav-number">17.</span> <span class="nav-text">017.python中断言方法举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#018-数据表student有id-name-score-city字段，其中name中的名字可有重复，需要消除重复行-请写sql语句"><span class="nav-number">18.</span> <span class="nav-text">018.数据表student有id,name,score,city字段，其中name中的名字可有重复，需要消除重复行,请写sql语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#019-10个Linux常用命令"><span class="nav-number">19.</span> <span class="nav-text">019.10个Linux常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#020-python2和python3区别？列举5个"><span class="nav-number">20.</span> <span class="nav-text">020.python2和python3区别？列举5个</span></a></li></ol></div>
             
 
           </div>
