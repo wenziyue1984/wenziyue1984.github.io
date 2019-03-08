@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="wenziyue1984">
 <meta property="og:description" content="python面试笔试题汇总，挖个坑，慢慢填">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-07T06:36:59.933Z">
+<meta property="og:updated_time" content="2019-03-08T03:27:00.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="110道python面试题">
 <meta name="twitter:description" content="python面试笔试题汇总，挖个坑，慢慢填">
@@ -479,6 +479,54 @@ ifconfig 显示网络配置
 9.map/filter
     py2里返回list
     py3里返回map对象/filter对象，都是迭代器
+</code></pre><h3 id="021-列出python中可变数据类型和不可变数据类型，并简述原理"><a href="#021-列出python中可变数据类型和不可变数据类型，并简述原理" class="headerlink" title="021.列出python中可变数据类型和不可变数据类型，并简述原理"></a>021.列出python中可变数据类型和不可变数据类型，并简述原理</h3><pre><code>不可变数据类型：数值型，str，tuple，frozenset
+    如果改变了变量的值，则相当于新建了一个对象，而对于相同值的对象（仅指短int，string），在内存中则只有一个对象
+    a = &apos;test&apos;
+    b = &apos;test&apos;
+    id(a) == id(b)
+    &gt;&gt;&gt; True
+
+可变对象类型：list，dict，set
+    允许变量的值发生改变，给它们add，append之后并不会改变他们的id
+    l = [1,2]
+    id(l)
+    &gt;&gt;&gt; 2855564615176
+    l.append(3)
+    &gt;&gt;&gt; [1,2,3]
+    id(l)
+    &gt;&gt;&gt; 2855564615176
+</code></pre><h3 id="022-s-“ajldjlajfdljfddd”，去重并从小到大排序输出”adfjl”"><a href="#022-s-“ajldjlajfdljfddd”，去重并从小到大排序输出”adfjl”" class="headerlink" title="022.s = “ajldjlajfdljfddd”，去重并从小到大排序输出”adfjl”"></a>022.s = “ajldjlajfdljfddd”，去重并从小到大排序输出”adfjl”</h3><pre><code>自己写的方法：
+    s = &apos;ajldjlajfdljfddd&apos;
+    l = []
+    for i in s:
+        if i not in l:
+            l.append(i)
+    l.sort()
+    result = &apos;&apos;.join(l)
+    print(result)
+
+答案方法：
+    s = &apos;ajldjlajfdljfddd&apos;
+    s = set(s)
+    l = list(s)
+    res = &apos;&apos;.join(l)
+
+很明显答案方法更简介，看到去重应该首先想到set
+</code></pre><h3 id="023-用lambda函数实现两个数相乘"><a href="#023-用lambda函数实现两个数相乘" class="headerlink" title="023.用lambda函数实现两个数相乘"></a>023.用lambda函数实现两个数相乘</h3><pre><code>f = lambda x, y: x * y
+print(f(2, 3))
+</code></pre><h3 id="024-字典根据键从小到大排序d-‘name’-’zs’-’age’-18-’city’-’深圳’-’tel’-’1362626627’"><a href="#024-字典根据键从小到大排序d-‘name’-’zs’-’age’-18-’city’-’深圳’-’tel’-’1362626627’" class="headerlink" title="024.字典根据键从小到大排序d={‘name’:’zs’,’age’:18,’city’:’深圳’,’tel’:’1362626627’}"></a>024.字典根据键从小到大排序d={‘name’:’zs’,’age’:18,’city’:’深圳’,’tel’:’1362626627’}</h3><pre><code>d = {&apos;name&apos;: &apos;zs&apos;, &apos;age&apos;: 18, &apos;city&apos;: &apos;深圳&apos;, &apos;tel&apos;: &apos;1362626627&apos;}
+d_sort = sorted(d)
+# l = list(d)
+# d_sort = l.sort()
+for i in d_sort:
+    print(&apos;{}:{}&apos;.format(i, d[i]))
+
+# 不明白这个题，dict本来就是无序的何谈排序？你按key的顺序添加进dict，再输出的时候不还是无序的么
+# 所以就只是按顺序输出了一下key-value
+</code></pre><h3 id="025-利用collections库的Counter方法统计字符串每个单词出现的次数‘kjalfj-ldsjafl-hdsllfdhg-lahfbl-hl-ahlf-h’"><a href="#025-利用collections库的Counter方法统计字符串每个单词出现的次数‘kjalfj-ldsjafl-hdsllfdhg-lahfbl-hl-ahlf-h’" class="headerlink" title="025.利用collections库的Counter方法统计字符串每个单词出现的次数‘kjalfj;ldsjafl;hdsllfdhg;lahfbl;hl;ahlf;h’"></a>025.利用collections库的Counter方法统计字符串每个单词出现的次数‘kjalfj;ldsjafl;hdsllfdhg;lahfbl;hl;ahlf;h’</h3><pre><code>from collections import Counter
+s = &apos;kjalfj;ldsjafl;hdsllfdhg;lahfbl;hl;ahlf;h&apos;
+print(Counter(s))
+&gt;&gt;&gt;Counter({&apos;l&apos;: 9, &apos;;&apos;: 6, &apos;h&apos;: 6, &apos;f&apos;: 5, &apos;a&apos;: 4, &apos;j&apos;: 3, &apos;d&apos;: 3, &apos;s&apos;: 2, &apos;k&apos;: 1, &apos;g&apos;: 1, &apos;b&apos;: 1})
 </code></pre>
       
     </div>
@@ -627,7 +675,7 @@ ifconfig 显示网络配置
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#001-一行代码实现1-100求和"><span class="nav-number">1.</span> <span class="nav-text">001.一行代码实现1-100求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#002-如何在一个函数内部修改全局变量"><span class="nav-number">2.</span> <span class="nav-text">002.如何在一个函数内部修改全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#003-列出5个python标准库"><span class="nav-number">3.</span> <span class="nav-text">003.列出5个python标准库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#004-字典如何删除键和合并两个字典"><span class="nav-number">4.</span> <span class="nav-text">004.字典如何删除键和合并两个字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#005-谈下python的GIL"><span class="nav-number">5.</span> <span class="nav-text">005.谈下python的GIL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#006-python实现列表去重"><span class="nav-number">6.</span> <span class="nav-text">006.python实现列表去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#007-fun-args-kwargs-中的-args-kwargs什么意思？"><span class="nav-number">7.</span> <span class="nav-text">007.fun(*args,**kwargs)中的*args,**kwargs什么意思？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#008-python2和python3的range（100）的区别"><span class="nav-number">8.</span> <span class="nav-text">008.python2和python3的range（100）的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#009-一句话解释什么样的语言能够用装饰器"><span class="nav-number">9.</span> <span class="nav-text">009.一句话解释什么样的语言能够用装饰器?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#010-python内建数据类型有哪些"><span class="nav-number">10.</span> <span class="nav-text">010.python内建数据类型有哪些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#011-简述面向对象中-new-和-init-区别"><span class="nav-number">11.</span> <span class="nav-text">011.简述面向对象中__new__和__init__区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#012-简述with方法打开处理文件帮我我们做了什么？"><span class="nav-number">12.</span> <span class="nav-text">012.简述with方法打开处理文件帮我我们做了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#013-列表-1-2-3-4-5-请使用map-函数输出-1-4-9-16-25-，并使用列表推导式提取出大于10的数，最终输出-16-25"><span class="nav-number">13.</span> <span class="nav-text">013.列表[1,2,3,4,5],请使用map()函数输出[1,4,9,16,25]，并使用列表推导式提取出大于10的数，最终输出[16,25]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#014-python中生成随机整数、随机小数、0—1之间小数方法"><span class="nav-number">14.</span> <span class="nav-text">014.python中生成随机整数、随机小数、0—1之间小数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#015-避免转义给字符串加哪个字母表示原始字符串？"><span class="nav-number">15.</span> <span class="nav-text">015.避免转义给字符串加哪个字母表示原始字符串？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#016-lt-div-class-”nam”-中国-lt-div-，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的"><span class="nav-number">16.</span> <span class="nav-text">016.&lt;div class=”nam”&gt;中国&lt;/div&gt;，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#017-python中断言方法举例"><span class="nav-number">17.</span> <span class="nav-text">017.python中断言方法举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#018-数据表student有id-name-score-city字段，其中name中的名字可有重复，需要消除重复行-请写sql语句"><span class="nav-number">18.</span> <span class="nav-text">018.数据表student有id,name,score,city字段，其中name中的名字可有重复，需要消除重复行,请写sql语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#019-10个Linux常用命令"><span class="nav-number">19.</span> <span class="nav-text">019.10个Linux常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#020-python2和python3区别？列举5个"><span class="nav-number">20.</span> <span class="nav-text">020.python2和python3区别？列举5个</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#001-一行代码实现1-100求和"><span class="nav-number">1.</span> <span class="nav-text">001.一行代码实现1-100求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#002-如何在一个函数内部修改全局变量"><span class="nav-number">2.</span> <span class="nav-text">002.如何在一个函数内部修改全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#003-列出5个python标准库"><span class="nav-number">3.</span> <span class="nav-text">003.列出5个python标准库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#004-字典如何删除键和合并两个字典"><span class="nav-number">4.</span> <span class="nav-text">004.字典如何删除键和合并两个字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#005-谈下python的GIL"><span class="nav-number">5.</span> <span class="nav-text">005.谈下python的GIL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#006-python实现列表去重"><span class="nav-number">6.</span> <span class="nav-text">006.python实现列表去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#007-fun-args-kwargs-中的-args-kwargs什么意思？"><span class="nav-number">7.</span> <span class="nav-text">007.fun(*args,**kwargs)中的*args,**kwargs什么意思？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#008-python2和python3的range（100）的区别"><span class="nav-number">8.</span> <span class="nav-text">008.python2和python3的range（100）的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#009-一句话解释什么样的语言能够用装饰器"><span class="nav-number">9.</span> <span class="nav-text">009.一句话解释什么样的语言能够用装饰器?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#010-python内建数据类型有哪些"><span class="nav-number">10.</span> <span class="nav-text">010.python内建数据类型有哪些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#011-简述面向对象中-new-和-init-区别"><span class="nav-number">11.</span> <span class="nav-text">011.简述面向对象中__new__和__init__区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#012-简述with方法打开处理文件帮我我们做了什么？"><span class="nav-number">12.</span> <span class="nav-text">012.简述with方法打开处理文件帮我我们做了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#013-列表-1-2-3-4-5-请使用map-函数输出-1-4-9-16-25-，并使用列表推导式提取出大于10的数，最终输出-16-25"><span class="nav-number">13.</span> <span class="nav-text">013.列表[1,2,3,4,5],请使用map()函数输出[1,4,9,16,25]，并使用列表推导式提取出大于10的数，最终输出[16,25]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#014-python中生成随机整数、随机小数、0—1之间小数方法"><span class="nav-number">14.</span> <span class="nav-text">014.python中生成随机整数、随机小数、0—1之间小数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#015-避免转义给字符串加哪个字母表示原始字符串？"><span class="nav-number">15.</span> <span class="nav-text">015.避免转义给字符串加哪个字母表示原始字符串？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#016-lt-div-class-”nam”-中国-lt-div-，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的"><span class="nav-number">16.</span> <span class="nav-text">016.&lt;div class=”nam”&gt;中国&lt;/div&gt;，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#017-python中断言方法举例"><span class="nav-number">17.</span> <span class="nav-text">017.python中断言方法举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#018-数据表student有id-name-score-city字段，其中name中的名字可有重复，需要消除重复行-请写sql语句"><span class="nav-number">18.</span> <span class="nav-text">018.数据表student有id,name,score,city字段，其中name中的名字可有重复，需要消除重复行,请写sql语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#019-10个Linux常用命令"><span class="nav-number">19.</span> <span class="nav-text">019.10个Linux常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#020-python2和python3区别？列举5个"><span class="nav-number">20.</span> <span class="nav-text">020.python2和python3区别？列举5个</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#021-列出python中可变数据类型和不可变数据类型，并简述原理"><span class="nav-number">21.</span> <span class="nav-text">021.列出python中可变数据类型和不可变数据类型，并简述原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#022-s-“ajldjlajfdljfddd”，去重并从小到大排序输出”adfjl”"><span class="nav-number">22.</span> <span class="nav-text">022.s = “ajldjlajfdljfddd”，去重并从小到大排序输出”adfjl”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#023-用lambda函数实现两个数相乘"><span class="nav-number">23.</span> <span class="nav-text">023.用lambda函数实现两个数相乘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#024-字典根据键从小到大排序d-‘name’-’zs’-’age’-18-’city’-’深圳’-’tel’-’1362626627’"><span class="nav-number">24.</span> <span class="nav-text">024.字典根据键从小到大排序d={‘name’:’zs’,’age’:18,’city’:’深圳’,’tel’:’1362626627’}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#025-利用collections库的Counter方法统计字符串每个单词出现的次数‘kjalfj-ldsjafl-hdsllfdhg-lahfbl-hl-ahlf-h’"><span class="nav-number">25.</span> <span class="nav-text">025.利用collections库的Counter方法统计字符串每个单词出现的次数‘kjalfj;ldsjafl;hdsllfdhg;lahfbl;hl;ahlf;h’</span></a></li></ol></div>
             
 
           </div>
